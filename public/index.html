@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta base="/app-h5-dev/">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no,viewport-fit=cover">
+  <!-- 拨打手机号 -->
+  <meta name="format-detection" content="telephone=yes" />
+  <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
+  <script src="https://h5.hpcang.com/new/commonCDN/js/aliyun-oss-sdk-4.4.4.min.js"></script>
+  <!-- CDN-引入样式 -->
+  <% for (var i in htmlWebpackPlugin.options.cdn.css) { %>
+  <link href="<%= htmlWebpackPlugin.options.cdn.css[i] %>" rel="stylesheet" />
+  <% } %>
+  <title></title>
+</head>
+
+<body>
+  <script>
+    let agent = navigator.userAgent.toLowerCase(); //检测是否是ios
+    let path = window.location.href;
+    if (path.indexOf('oneCoupon')>-1||path.indexOf('userOneCoupon')>-1) {
+      if (agent.indexOf('iphone') >= 0 || agent.indexOf('ipad') >= 0) {
+        let isPageHide = false;
+        window.addEventListener('pageshow', function () {
+          if (isPageHide) {
+            window.location.reload();
+          }
+        });
+        window.addEventListener('pagehide', function () {
+          isPageHide = true;
+        })
+      }
+    }
+  </script>
+  <noscript>
+    <strong>We're sorry but website doesn't work properly without JavaScript
+      enabled. Please enable it to continue.</strong>
+  </noscript>
+  <div id="app">
+    <!-- 开启 safe-area-inset-bottom 属性 -->
+    <van-number-keyboard safe-area-inset-bottom />
+  </div>
+  <!-- CDN-引入js -->
+  <% for (var i in htmlWebpackPlugin.options.cdn.js) { %>
+  <script src="<%= htmlWebpackPlugin.options.cdn.js[i] %>"></script>
+  <% } %>
+  <!-- CDN end -->
+</body>
+
+</html>
